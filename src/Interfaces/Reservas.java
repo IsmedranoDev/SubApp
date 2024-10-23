@@ -5,9 +5,14 @@
 package Interfaces;
 
 import Clases.Comprobacion;
-import Clases.Conexion;
+import Repository.ClienteRepository;
+import Repository.impl.ApiRestRepository;
+import Repository.impl.ClienteRepositoryMySQL;
+
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 
 
 
@@ -30,7 +35,10 @@ Object idCliente;
         modelo2 = (DefaultTableModel) reservasClientes.getModel();
         
         
-        Conexion.cargarReservas(modelo2, idActividad);
+        //conexion.cargarReservas(modelo2, idActividad);
+        ApiRestRepository apiRepository = new ApiRestRepository();
+        apiRepository.cargarReservas(modelo2, idActividad);
+        
         
   
     
@@ -284,11 +292,20 @@ Object idCliente;
     }//GEN-LAST:event_reservasClientesMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+
+
+
+
         modelo.setRowCount(0);
         
-        if(Comprobacion.vacio(txtNombre)) Comprobacion.alertaVacio(this, txtNombre);
-        else Conexion.busquedaClientes(modelo, txtNombre.getText());
+        if(Comprobacion.vacio(txtNombre)){
+            
+         
+            ApiRestRepository apirestrepository = new ApiRestRepository();
+            apirestrepository.cargarClientes(modelo);
+            
+        }
+        else conexion.busquedaClientes(modelo, txtNombre.getText());
         
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -306,31 +323,37 @@ Object idCliente;
         
         
         //Llamo a la función AgregarClienteActividad mandando el id que he seleccionado en la JTable y el idActividad que ya ha sido cargado al iniciar el JFrame
-        int resultado=-1;
+        //int resultado=-1;
         
         if (Comprobacion.select(cbxBotella)) {Comprobacion.alertaSelect(this, cbxBotella);}
         if (Comprobacion.select(cbxConexion)) {Comprobacion.alertaSelect(this, cbxConexion);} 
         else {
 
             modelo.setRowCount(0);
-            resultado = Conexion.agregarClienteActividad(idActividad, (int) idCliente, botella);
+            ApiRestRepository apirestrepository = new ApiRestRepository();
+            
+            
+            //////////////////////////////
+            /////////////////////////////
+            ////////////////////////////
+            int resultado;
+            resultado = apirestrepository.registraReserva(idActividad, (int) idCliente, botella);
+            //resultado = conexion.agregarClienteActividad(idActividad, (int) idCliente, botella);
             modelo2.setRowCount(0);
-            Conexion.cargarReservas(modelo2, idActividad);
+            conexion.cargarReservas(modelo2, idActividad);
 
+            
             switch (resultado) {
-                // 0 = No se a realizado la inscripción por error. 1 = El registro se ha realizado correctamente. 2= El usuario ya se encuentra en la actividad
 
-                case 0:
-                    JOptionPane.showMessageDialog(this, "Ha ocurrido un error en la inscripción", "Error", JOptionPane.ERROR_MESSAGE);
-                    break;
+                case 0 -> JOptionPane.showMessageDialog(this, "Ha ocurrido un error en la inscripción", "Error", JOptionPane.ERROR_MESSAGE);
 
-                case 1:
-                    JOptionPane.showMessageDialog(this, "El registro se realizó correctamente", "Registrado", JOptionPane.INFORMATION_MESSAGE);
-                    break;
+                case 1 -> JOptionPane.showMessageDialog(this, "El registro se realizó correctamente", "Registrado", JOptionPane.INFORMATION_MESSAGE);
 
-                case 2:
-                    JOptionPane.showMessageDialog(this, "El cliente ya se encuentra registrado en la actividad", "Error", JOptionPane.ERROR_MESSAGE);
-            } //Fin del ELSE
+                case 2 -> JOptionPane.showMessageDialog(this, "El cliente ya se encuentra registrado en la actividad", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
+            // 0 = No se a realizado la inscripción por error. 1 = El registro se ha realizado correctamente. 2= El usuario ya se encuentra en la actividad
+            //Fin del ELSE
         }
 
         // TODO add your handling code here:
@@ -394,4 +417,12 @@ Object idCliente;
     // End of variables declaration//GEN-END:variables
 DefaultTableModel modelo;
 DefaultTableModel modelo2;
+ClienteRepository conexion = new ClienteRepositoryMySQL();
+
+
+
+
+    
+       
+   
 }

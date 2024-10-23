@@ -117,5 +117,7 @@ public class Comprobacion {
     public static void alertaTelefono(Component padre, JTextField campo){
         JOptionPane.showMessageDialog(padre, "El campo" + campo.getName() + " debe contener un número de teléfono válido" , "Teléfono inválido", JOptionPane.ERROR_MESSAGE);
         campo.setBackground(Color.red);
+        
+        
     }
 }

@@ -6,7 +6,10 @@ package Interfaces;
 
 import Clases.Comprobacion;
 import Clases.Objetos.Actividad;
-import Clases.Conexion;
+import Repository.ClienteRepository;
+import Repository.InstructorRepository;
+import Repository.impl.ClienteRepositorySQLite;
+import Repository.impl.InstructorRepositoryApiRest;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -271,14 +274,19 @@ registrar();
     // End of variables declaration//GEN-END:variables
     private Map<String, Integer> instructoresMap;
     private int instructor;
+    ClienteRepository conexion = new ClienteRepositorySQLite();
+    
     
 public void cargarInstructores(){
     
     
-   instructoresMap = Conexion.cargaInstructores();
-   for(String nombre : instructoresMap.keySet()){
-       cbxInstructores.addItem(nombre);
-   }
+
+InstructorRepository repositorio = new InstructorRepositoryApiRest();
+instructoresMap = repositorio.cargaInstructores();
+
+for(String nombre : instructoresMap.keySet()){
+    cbxInstructores.addItem(nombre);
+}
     
     
 }
@@ -300,21 +308,23 @@ public void registrar(){
     
     
     String hora= cbxHora.getSelectedItem().toString() + ":" + cbxMinutos.getSelectedItem().toString();
-    String fecha = Conexion.formatoFecha(boxFecha.getDate());
+    String fecha = conexion.formatoFecha(boxFecha.getDate());
     int istructor = seleccionaInstructor();
     
     Actividad actividad = new Actividad(
+            0,
             fecha,
             hora,
             cbxLugar.getSelectedItem().toString(),
             cbxPuntoSalida.getSelectedItem().toString(),
             instructor,
+            "instructor",
             cbxTipoSalida.getSelectedItem().toString()
     );
     
       
         
-        if(Conexion.registrar_salidas_buceo(actividad)) JOptionPane.showMessageDialog(this, "Registrado");
+        if(conexion.registrar_salidas_buceo(actividad)) JOptionPane.showMessageDialog(this, "Registrado");
         else JOptionPane.showMessageDialog(this, "No registrado");
         
     } //Fin el úlitimo ELSE 
@@ -329,6 +339,7 @@ public int seleccionaInstructor(){
     for(Map.Entry<String, Integer> entrada : instructoresMap.entrySet()){
        if(entrada.getKey().equals(cbxInstructores.getSelectedItem().toString())){
            instructor = entrada.getValue();
+           System.out.println(instructor);
            break;
            
        }

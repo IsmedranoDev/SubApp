@@ -7,8 +7,9 @@ package Interfaces;
 
 import Clases.Comprobacion;
 import Clases.Objetos.Cliente;
-import Clases.Conexion;
+import Repository.impl.ClienteRepositorySQLite;
 import Clases.Objetos.Instructor;
+import Repository.ClienteRepository;
 import javax.swing.JOptionPane;
 
 /**
@@ -335,6 +336,7 @@ registrar();
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
+ClienteRepository conexion = new ClienteRepositorySQLite();
 
     
     public void registrar(){
@@ -361,6 +363,7 @@ registrar();
         if(chbFrances.isSelected()) idiomas += "Francés ";
         
         Instructor instructor = new Instructor(
+                0,
                txtNombre.getText(), 
                 txtApellidos.getText(), 
                 dateFechaNacimiento.getDate(),
@@ -374,7 +377,7 @@ registrar();
         
         
         
-        if(Conexion.registraInstructor(instructor)) JOptionPane.showMessageDialog(this, "Registrado");
+        if(conexion.registraInstructor(instructor)) JOptionPane.showMessageDialog(this, "Registrado");
         else JOptionPane.showMessageDialog(this, "No registrado");
         
         }// Fin del último ELSE

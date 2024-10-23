@@ -16,9 +16,9 @@ public class Instructor extends Buceador{
     String idiomas;
     
     
-    public Instructor(String nombre, String apellidos,Date fechaNacimiento, String direccion, String telefono, String email, String certificaciones, String idiomas){
+    public Instructor(int Id,String nombre, String apellidos,Date fechaNacimiento, String direccion, String telefono, String email, String certificaciones, String idiomas){
         
-        super(nombre, apellidos, fechaNacimiento, direccion, telefono, email, certificaciones);
+        super(Id, nombre, apellidos, fechaNacimiento, direccion, telefono, email, certificaciones);
     
         
         this.idiomas=idiomas;

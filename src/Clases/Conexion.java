@@ -210,7 +210,7 @@ public class Conexion {
             pst.setString(2, a.getHora());
             pst.setString(3, a.getLugar());
             pst.setString(4, a.getPuntoSalida());
-            pst.setInt(5, a.getInstructor());
+            pst.setInt(5, a.getInstructor_id());
             pst.setString(6, a.getTipoSalida());
 
             pst.execute();
@@ -373,8 +373,8 @@ public class Conexion {
        
     }
     
-    
-    public static void cargarReservas(DefaultTableModel modelo, int id){
+    //Antes conocido como CargarReservas
+    public static void cargarActividades(DefaultTableModel modelo, int id){
         String sql = "SELECT c.nombre, c.apellidos, b.capacidad, b.conexion\n" +
                     "FROM actividades a\n" +
                     "JOIN Clientes c ON a.cliente_id = c.id\n" +

@@ -4,7 +4,8 @@
  */
 package Interfaces;
 
-import Clases.Conexion;
+import Repository.ClienteRepository;
+import Repository.impl.ClienteRepositorySQLite;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -168,12 +169,13 @@ private static String fecha;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JPanel panelActividades;
     // End of variables declaration//GEN-END:variables
+ClienteRepository conexion = new ClienteRepositorySQLite();
 
     
 public void mostrarActividades(String fecha) {
     lblFecha.setText(fecha);
     
-    Map<String, List<Object[]>> actividadesMap = Conexion.trabajoDiario(fecha);
+    Map<String, List<Object[]>> actividadesMap = conexion.trabajoDiario(fecha);
 
     panelActividades.removeAll();
     panelActividades.setLayout(new GridLayout(0, 1)); // Layout vertical para las actividades

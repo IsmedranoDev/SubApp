@@ -5,8 +5,11 @@ package Clases.Objetos;
  *
  * @author israelmedrano
  */
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Cliente extends Buceador {
     // Atributos de la clase
    
@@ -14,10 +17,16 @@ public class Cliente extends Buceador {
     private int numeroBuceos;
     private String nivel;
 
+    //Constructor por defecto
+    public Cliente(){
+        super();
+        
+    }
+    
     // Constructor
-    public Cliente(String nombre, String apellidos,Date fechaNacimiento, String direccion, String telefono, String email, String certificaciones, int numeroBuceos, String nivel) {
+    public Cliente(int Id,String nombre, String apellidos,Date fechaNacimiento, String direccion, String telefono, String email, String certificaciones, int numeroBuceos, String nivel) {
        
-        super(nombre, apellidos, fechaNacimiento, direccion, telefono, email, certificaciones);
+        super(Id, nombre, apellidos, fechaNacimiento, direccion, telefono, email, certificaciones);
         
         this.nivel=nivel;
         this.numeroBuceos=numeroBuceos;

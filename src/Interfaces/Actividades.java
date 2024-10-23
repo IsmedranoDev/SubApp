@@ -5,7 +5,9 @@
 package Interfaces;
 
 import Clases.Comprobacion;
-import Clases.Conexion;
+import Repository.ClienteRepository;
+import Repository.impl.ApiRestRepository;
+import Repository.impl.ClienteRepositorySQLite;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -195,7 +197,10 @@ modelo.setRowCount(0);
 //Obtengo la fecha del cuadrado del calendario, la combierto al fortamo adecuado y la paso como parámetro al método para obtener las salidas de esa fecha
 
 if(!Comprobacion.fechaVacia(boxFecha)){
-    Conexion.consultaRerservas(modelo, Conexion.formatoFecha(boxFecha.getDate()));
+    //conexion.consultaRerservas(modelo, conexion.formatoFecha(boxFecha.getDate()));
+    
+    ApiRestRepository apirestrepository = new ApiRestRepository();
+    apirestrepository.consultaReservas(modelo, boxFecha.getDate());
 } else{
     Comprobacion.alertaFechaVacia(this, boxFecha);
 }
@@ -256,4 +261,6 @@ if(!Comprobacion.fechaVacia(boxFecha)){
     private javax.swing.JTable reservas;
     // End of variables declaration//GEN-END:variables
 DefaultTableModel modelo;
+ClienteRepository conexion = new ClienteRepositorySQLite();
+
 }

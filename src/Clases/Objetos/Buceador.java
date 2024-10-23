@@ -12,6 +12,7 @@ import java.util.Date;
  */
 public class Buceador {
     
+    private int Id;
     private String nombre;
     private String apellidos;
     private Date fechaNacimiento;
@@ -21,8 +22,13 @@ public class Buceador {
     private String certificaciones;
     
     
+    //Constructor vacío por defecto
+    
+    public Buceador(){
+        
+    }
 
-    public Buceador(String nombre, String apellidos,Date fechaNacimiento, String direccion, String telefono, String email, String certificaciones) {
+    public Buceador(int Id,String nombre, String apellidos,Date fechaNacimiento, String direccion, String telefono, String email, String certificaciones) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.fechaNacimiento = fechaNacimiento;
@@ -34,6 +40,14 @@ public class Buceador {
         
     }
 
+    public int getID() {
+        return Id;
+    }
+    
+    public void setId(int id){
+        this.Id= id;
+    }
+    
     public String getNombre() {
         return nombre;
     }

@@ -7,7 +7,9 @@ package Interfaces;
 
 import Clases.Comprobacion;
 import Clases.Objetos.Cliente;
-import Clases.Conexion;
+import Repository.ClienteRepository;
+import Repository.impl.ClienteRepositoryApiRest;
+import Repository.impl.ClienteRepositorySQLite;
 import javax.swing.JOptionPane;
 
 /**
@@ -261,6 +263,8 @@ public class FormularioClientes extends javax.swing.JFrame {
 
       
         registrar();
+        
+        
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -332,7 +336,7 @@ public class FormularioClientes extends javax.swing.JFrame {
     private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtnivel;
     // End of variables declaration//GEN-END:variables
-
+ClienteRepository conexion = new ClienteRepositorySQLite();
     /**
      * Permite crear un objeto de tipo Cliente y registrarlo en la BD
      */
@@ -350,13 +354,14 @@ public class FormularioClientes extends javax.swing.JFrame {
             else if (Comprobacion.esEmail(txtEmail.toString())) Comprobacion.alertaEmail(this, txtEmail);
         else if(Comprobacion.select(certificacion)) Comprobacion.alertaSelect(this, certificacion);
         else if(Comprobacion.vacio(txtNumeroBuceos)) Comprobacion.alertaVacio(this, txtNumeroBuceos);
-        else if (Comprobacion.esNumero(txtNumeroBuceos.getText())) Comprobacion.alertaNumero(this, txtNumeroBuceos);
+        else if (!Comprobacion.esNumero(txtNumeroBuceos.getText())) Comprobacion.alertaNumero(this, txtNumeroBuceos);
         else{
             
             
         
         
-        Cliente cliente = new Cliente(  
+        Cliente cliente = new Cliente( 
+                0,
                 txtNombre.getText(), 
                 txtApellidos.getText(), 
                 dateFechaNacimiento.getDate(),
@@ -370,12 +375,16 @@ public class FormularioClientes extends javax.swing.JFrame {
         
         
         
-        if(Conexion.registraCliente(cliente)) JOptionPane.showMessageDialog(this, "Registrado");
-        else JOptionPane.showMessageDialog(this, "No registrado");
-        } //Fin del bloque final ELSE
+//        if(conexion.registraCliente(cliente)) JOptionPane.showMessageDialog(this, "Registrado");
+//        else JOptionPane.showMessageDialog(this, "No registrado");
+//        } //Fin del bloque final ELSE
        
+        ClienteRepository repositorio = new ClienteRepositoryApiRest();
+        
+        if(repositorio.registraCliente(cliente)) JOptionPane.showMessageDialog(this, "Registrado en MYSQL");
     }
     
     
-    
+     
+}
 }
