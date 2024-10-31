@@ -4,12 +4,14 @@
  */
 package Interfaces;
 
-import Repository.ClienteRepository;
-import Repository.impl.ClienteRepositorySQLite;
+
+import Repository.impl.ApiRestRepository;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+
 import java.util.List;
 import java.util.Map;
 import javax.swing.JLabel;
@@ -32,8 +34,10 @@ private static String fecha;
     public TrabajoDiario(java.awt.Frame parent, boolean modal, String fecha) {
         this.fecha=fecha;
         initComponents();
-  
+  System.out.println("La fecha que entra es: " + fecha);
         mostrarActividades(fecha);
+        lblFecha.setText(fecha);
+        
         
     
     }
@@ -49,8 +53,9 @@ private static String fecha;
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        lblFecha1 = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         panelActividades = new javax.swing.JPanel();
 
@@ -62,21 +67,43 @@ private static String fecha;
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("SubApp");
 
+        lblFecha1.setBackground(new java.awt.Color(255, 255, 255));
+        lblFecha1.setFont(new java.awt.Font(".SF NS Text", 1, 36)); // NOI18N
+        lblFecha1.setForeground(new java.awt.Color(255, 255, 255));
+        lblFecha1.setText("Trabajo diario");
+        lblFecha1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        lblFecha.setFont(new java.awt.Font(".SF NS Text", 0, 36)); // NOI18N
+        lblFecha.setForeground(new java.awt.Color(255, 255, 255));
+        lblFecha.setText("Trabajo diario");
+        lblFecha.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(264, 264, 264)
+                .addComponent(lblFecha1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblFecha)
+                .addGap(209, 209, 209)
                 .addComponent(jLabel1)
-                .addGap(486, 486, 486))
+                .addGap(59, 59, 59))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jLabel1)
-                .addGap(0, 56, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblFecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 153));
@@ -92,10 +119,6 @@ private static String fecha;
             .addGap(0, 40, Short.MAX_VALUE)
         );
 
-        lblFecha.setFont(new java.awt.Font(".SF NS Text", 0, 36)); // NOI18N
-        lblFecha.setText("jLabel2");
-        lblFecha.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
         javax.swing.GroupLayout panelActividadesLayout = new javax.swing.GroupLayout(panelActividades);
         panelActividades.setLayout(panelActividadesLayout);
         panelActividadesLayout.setHorizontalGroup(
@@ -104,7 +127,7 @@ private static String fecha;
         );
         panelActividadesLayout.setVerticalGroup(
             panelActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 475, Short.MAX_VALUE)
+            .addGap(0, 591, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(panelActividades);
@@ -116,24 +139,17 @@ private static String fecha;
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(404, 404, 404)
-                        .addComponent(lblFecha))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1260, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(80, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGap(79, 79, 79)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -167,15 +183,17 @@ private static String fecha;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblFecha1;
     private javax.swing.JPanel panelActividades;
     // End of variables declaration//GEN-END:variables
-ClienteRepository conexion = new ClienteRepositorySQLite();
+
+ApiRestRepository repositorio = new ApiRestRepository();
 
     
 public void mostrarActividades(String fecha) {
-    lblFecha.setText(fecha);
     
-    Map<String, List<Object[]>> actividadesMap = conexion.trabajoDiario(fecha);
+    
+    Map<String, List<Object[]>> actividadesMap = repositorio.trabajoDiario(fecha);
 
     panelActividades.removeAll();
     panelActividades.setLayout(new GridLayout(0, 1)); // Layout vertical para las actividades

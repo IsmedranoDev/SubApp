@@ -4,6 +4,7 @@
  */
 package Clases.Objetos;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -13,7 +14,8 @@ import java.util.Date;
 public class Actividad {
     
     private int id;
-    private String fecha;
+    
+    private Date fecha;
     private String hora;
     private String lugar;
     private String puntoSalida;
@@ -21,7 +23,8 @@ public class Actividad {
     private String tipoSalida;
     private String instructorNombre;
     
-    public Actividad (int id, String fecha, String hora, String lugar, String puntoSalida, int instructor_id, String instructorNombre, String tipoSalida){
+    
+      public Actividad (int id, Date fecha, String hora, String lugar, String puntoSalida, int instructor_id, String tipoSalida){
         
         this.fecha = fecha;
         this.hora = hora;
@@ -31,11 +34,24 @@ public class Actividad {
         this.tipoSalida=tipoSalida;
     }
 
-    public String getFecha() {
+    
+    public Actividad (int id, Date fecha, String hora, String lugar, String puntoSalida, int instructor_id, String instructorNombre, String tipoSalida){
+        
+        this.fecha = fecha;
+        this.hora = hora;
+        this.lugar = lugar;
+        this.puntoSalida=puntoSalida;
+        this.instructor_id=instructor_id;
+        this.tipoSalida=tipoSalida;
+        this.instructorNombre=instructorNombre;
+    }
+    
+   
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

@@ -6,10 +6,10 @@ package Interfaces;
 
 
 import Clases.Comprobacion;
-import Clases.Objetos.Cliente;
-import Repository.impl.ClienteRepositorySQLite;
+
 import Clases.Objetos.Instructor;
-import Repository.ClienteRepository;
+
+import Repository.impl.ApiRestRepository;
 import javax.swing.JOptionPane;
 
 /**
@@ -219,7 +219,7 @@ public class FormularioInstructores extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Registrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -336,50 +336,61 @@ registrar();
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
-ClienteRepository conexion = new ClienteRepositorySQLite();
 
-    
-    public void registrar(){
-        
-        
-        if(Comprobacion.vacio(txtNombre))Comprobacion.alertaVacio(this, txtNombre);
-        else if(Comprobacion.vacio(txtApellidos)) Comprobacion.alertaVacio(this, txtApellidos);
-        else if(Comprobacion.fechaVacia(dateFechaNacimiento)) Comprobacion.alertaFechaVacia(this, dateFechaNacimiento);
-        else if(Comprobacion.vacio(txtDireccion)) Comprobacion.alertaVacio(this, txtDireccion);
-        else if(Comprobacion.vacio(txtTelefono)) Comprobacion.alertaVacio(this, txtTelefono);
-            else if (Comprobacion.esTelefono(txtTelefono.getText())) Comprobacion.alertaTelefono(this, txtTelefono);
-        else if(Comprobacion.vacio(txtEmail)) Comprobacion.alertaVacio(this, txtEmail);
-            else if (!Comprobacion.esEmail(txtEmail.getText())) Comprobacion.alertaEmail(this, txtEmail);
-        else if(Comprobacion.select(certificacion)) Comprobacion.alertaSelect(this, certificacion);
-        else{
-            
-        
-       
-        
+
+/**
+ * Registra un nuevo objeto de tipo {@link Instructor} en la base de datos.
+ *
+ * Este método valida que todos los campos necesarios para la creación del instructor
+ * estén debidamente rellenados. Si algún campo es inválido o está vacío, se muestra
+ * una alerta correspondiente al usuario. Una vez que todas las validaciones son exitosas,
+ * se crea un nuevo instructor con los datos proporcionados, incluyendo el idioma o idiomas
+ * seleccionados. A continuación, se intenta registrar el instructor en la base de datos
+ * a través de la clase {@link ApiRestRepository}. Si el registro es exitoso, se muestra un mensaje
+ * indicando que el registro fue correcto; de lo contrario, se informa que no se pudo registrar.
+ *
+ * @throws IllegalArgumentException si alguno de los datos proporcionados es inválido.
+ *                                   (Nota: Puedes ajustar esto según tus necesidades de manejo de errores).
+ *
+ * @see Instructor
+ * @see ApiRestRepository
+ */
+public void registrar() {
+    if (Comprobacion.vacio(txtNombre)) Comprobacion.alertaVacio(this, txtNombre);
+    else if (Comprobacion.vacio(txtApellidos)) Comprobacion.alertaVacio(this, txtApellidos);
+    else if (Comprobacion.fechaVacia(dateFechaNacimiento)) Comprobacion.alertaFechaVacia(this, dateFechaNacimiento);
+    else if (Comprobacion.vacio(txtDireccion)) Comprobacion.alertaVacio(this, txtDireccion);
+    else if (Comprobacion.vacio(txtTelefono)) Comprobacion.alertaVacio(this, txtTelefono);
+    else if (!Comprobacion.esTelefono(txtTelefono.getText())) Comprobacion.alertaTelefono(this, txtTelefono);
+    else if (Comprobacion.vacio(txtEmail)) Comprobacion.alertaVacio(this, txtEmail);
+    else if (!Comprobacion.esEmail(txtEmail.getText())) Comprobacion.alertaEmail(this, txtEmail);
+    else if (Comprobacion.select(certificacion)) Comprobacion.alertaSelect(this, certificacion);
+    else {
         String idiomas = "";
         
-        if(chbEspanol.isSelected()) idiomas += "Español ";
-        if(chbIngles.isSelected()) idiomas += "Ingles ";
-        if(chbFrances.isSelected()) idiomas += "Francés ";
+        if (chbEspanol.isSelected()) idiomas += "Español ";
+        if (chbIngles.isSelected()) idiomas += "Ingles ";
+        if (chbFrances.isSelected()) idiomas += "Francés ";
         
         Instructor instructor = new Instructor(
-                0,
-               txtNombre.getText(), 
-                txtApellidos.getText(), 
-                dateFechaNacimiento.getDate(),
-                txtDireccion.getText(),
-                txtTelefono.getText(),
-                txtEmail.getText(),
-                certificacion.getSelectedItem().toString(), 
-                idiomas
-                
+            0,
+            txtNombre.getText(),
+            txtApellidos.getText(),
+            dateFechaNacimiento.getDate(),
+            txtDireccion.getText(),
+            txtTelefono.getText(),
+            txtEmail.getText(),
+            certificacion.getSelectedItem().toString(),
+            idiomas
         );
         
+        ApiRestRepository repositorio = new ApiRestRepository();
+        System.out.println(instructor);
         
-        
-        if(conexion.registraInstructor(instructor)) JOptionPane.showMessageDialog(this, "Registrado");
-        else JOptionPane.showMessageDialog(this, "No registrado");
-        
-        }// Fin del último ELSE
-    }
+        if (repositorio.registraInstructor(instructor))
+            JOptionPane.showMessageDialog(this, "Registrado correctamente");
+        else
+            JOptionPane.showMessageDialog(this, "No registrado");
+    } // Fin del último ELSE
+}
 }

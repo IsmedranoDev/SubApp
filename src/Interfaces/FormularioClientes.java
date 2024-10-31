@@ -7,9 +7,9 @@ package Interfaces;
 
 import Clases.Comprobacion;
 import Clases.Objetos.Cliente;
-import Repository.ClienteRepository;
-import Repository.impl.ClienteRepositoryApiRest;
-import Repository.impl.ClienteRepositorySQLite;
+
+import Repository.impl.ApiRestRepository;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -213,7 +213,7 @@ public class FormularioClientes extends javax.swing.JFrame {
                 .addContainerGap(314, Short.MAX_VALUE))
         );
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Registrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -336,55 +336,57 @@ public class FormularioClientes extends javax.swing.JFrame {
     private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtnivel;
     // End of variables declaration//GEN-END:variables
-ClienteRepository conexion = new ClienteRepositorySQLite();
+
     /**
-     * Permite crear un objeto de tipo Cliente y registrarlo en la BD
-     */
-    public void registrar(){
-        
-        
-        //Compruebo que todos los valores están rellenos adecuadamente
-        if(Comprobacion.vacio(txtNombre))Comprobacion.alertaVacio(this, txtNombre);
-        else if(Comprobacion.vacio(txtApellidos)) Comprobacion.alertaVacio(this, txtApellidos);
-        else if(Comprobacion.fechaVacia(dateFechaNacimiento)) Comprobacion.alertaFechaVacia(this, dateFechaNacimiento);
-        else if(Comprobacion.vacio(txtDireccion)) Comprobacion.alertaVacio(this, txtDireccion);
-        else if(Comprobacion.vacio(txtTelefono)) Comprobacion.alertaVacio(this, txtTelefono);
-            else if (Comprobacion.esTelefono(txtTelefono.getText())) Comprobacion.alertaTelefono(this, txtTelefono);
-        else if(Comprobacion.vacio(txtEmail)) Comprobacion.alertaVacio(this, txtEmail);
-            else if (Comprobacion.esEmail(txtEmail.toString())) Comprobacion.alertaEmail(this, txtEmail);
-        else if(Comprobacion.select(certificacion)) Comprobacion.alertaSelect(this, certificacion);
-        else if(Comprobacion.vacio(txtNumeroBuceos)) Comprobacion.alertaVacio(this, txtNumeroBuceos);
-        else if (!Comprobacion.esNumero(txtNumeroBuceos.getText())) Comprobacion.alertaNumero(this, txtNumeroBuceos);
-        else{
-            
-            
-        
-        
+ * Registra un nuevo objeto de tipo {@link Cliente} en la base de datos.
+ *
+ * Este método comprueba que todos los campos necesarios para la creación del cliente
+ * están debidamente rellenados. Si algún campo es inválido o está vacío, se muestra
+ * una alerta correspondiente al usuario. Una vez que todas las validaciones son exitosas,
+ * se crea un nuevo cliente y se intenta registrar en la base de datos a través de
+ * la clase {@link ApiRestRepository}. Si el registro es exitoso, se muestra un mensaje
+ * indicando que el registro fue correcto; de lo contrario, se informa que no se pudo registrar.
+ *
+ * @throws IllegalArgumentException si alguno de los datos proporcionados es inválido.
+ *                                   (Nota: Puedes ajustar esto según tus necesidades de manejo de errores).
+ *
+ * @see Cliente
+ * @see ApiRestRepository
+ */
+public void registrar() {
+    // Compruebo que todos los valores están rellenos adecuadamente
+    if (Comprobacion.vacio(txtNombre)) Comprobacion.alertaVacio(this, txtNombre);
+    else if (Comprobacion.vacio(txtApellidos)) Comprobacion.alertaVacio(this, txtApellidos);
+    else if (Comprobacion.fechaVacia(dateFechaNacimiento)) Comprobacion.alertaFechaVacia(this, dateFechaNacimiento);
+    else if (Comprobacion.vacio(txtDireccion)) Comprobacion.alertaVacio(this, txtDireccion);
+    else if (Comprobacion.vacio(txtTelefono)) Comprobacion.alertaVacio(this, txtTelefono);
+    else if (!Comprobacion.esTelefono(txtTelefono.getText())) Comprobacion.alertaTelefono(this, txtTelefono);
+    else if (Comprobacion.vacio(txtEmail)) Comprobacion.alertaVacio(this, txtEmail);
+    else if (Comprobacion.esEmail(txtEmail.toString())) Comprobacion.alertaEmail(this, txtEmail);
+    else if (Comprobacion.select(certificacion)) Comprobacion.alertaSelect(this, certificacion);
+    else if (Comprobacion.vacio(txtNumeroBuceos)) Comprobacion.alertaVacio(this, txtNumeroBuceos);
+    else if (!Comprobacion.esNumero(txtNumeroBuceos.getText())) Comprobacion.alertaNumero(this, txtNumeroBuceos);
+    else {
         Cliente cliente = new Cliente( 
-                0,
-                txtNombre.getText(), 
-                txtApellidos.getText(), 
-                dateFechaNacimiento.getDate(),
-                txtDireccion.getText(),
-                txtTelefono.getText(),
-                txtEmail.getText(),
-                certificacion.getSelectedItem().toString(), 
-                Integer.parseInt(txtNumeroBuceos.getText()), 
-                txtnivel.getText()
+            0,
+            txtNombre.getText(), 
+            txtApellidos.getText(), 
+            dateFechaNacimiento.getDate(),
+            txtDireccion.getText(),
+            txtTelefono.getText(),
+            txtEmail.getText(),
+            certificacion.getSelectedItem().toString(), 
+            Integer.parseInt(txtNumeroBuceos.getText()), 
+            txtnivel.getText()
         );
+
+        ApiRestRepository repositorio = new ApiRestRepository();
         
-        
-        
-//        if(conexion.registraCliente(cliente)) JOptionPane.showMessageDialog(this, "Registrado");
-//        else JOptionPane.showMessageDialog(this, "No registrado");
-//        } //Fin del bloque final ELSE
-       
-        ClienteRepository repositorio = new ClienteRepositoryApiRest();
-        
-        if(repositorio.registraCliente(cliente)) JOptionPane.showMessageDialog(this, "Registrado en MYSQL");
+        if (repositorio.registraCliente(cliente)) 
+            JOptionPane.showMessageDialog(this, "Registrado correctamente");
+        else 
+            JOptionPane.showMessageDialog(this, "No registrado");
     }
-    
-    
-     
 }
 }
+

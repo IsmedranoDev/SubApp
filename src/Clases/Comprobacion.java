@@ -13,6 +13,8 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+
+
 /**
  *
  * @author israelmedrano
@@ -108,10 +110,10 @@ public class Comprobacion {
     
     public static boolean esTelefono(String telefono){
         
-        Pattern patron = Pattern.compile("^\\+?[0-9. ()-]{7,}$");
-        Matcher coincide = patron.matcher(telefono);
-        if(coincide.matches()) return true;
-        else return false;
+        Pattern patron = Pattern.compile("^\\d{9}$");
+Matcher coincide = patron.matcher(telefono);
+if(coincide.matches()) return true;
+else return false;
     }
     
     public static void alertaTelefono(Component padre, JTextField campo){
@@ -121,3 +123,4 @@ public class Comprobacion {
         
     }
 }
+

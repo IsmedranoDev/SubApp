@@ -6,16 +6,14 @@ package Interfaces;
 
 import Clases.Comprobacion;
 import Clases.Objetos.Actividad;
-import Repository.ClienteRepository;
-import Repository.InstructorRepository;
-import Repository.impl.ClienteRepositorySQLite;
-import Repository.impl.InstructorRepositoryApiRest;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
+
+
+import Repository.impl.ApiRestRepository;
+
+import java.util.Date;
+
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
 
 
@@ -104,7 +102,7 @@ public class RegistroActividades extends javax.swing.JDialog {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Registrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -274,79 +272,92 @@ registrar();
     // End of variables declaration//GEN-END:variables
     private Map<String, Integer> instructoresMap;
     private int instructor;
-    ClienteRepository conexion = new ClienteRepositorySQLite();
+    ApiRestRepository repositorio = new ApiRestRepository();
     
-    
-public void cargarInstructores(){
-    
-    
-
-InstructorRepository repositorio = new InstructorRepositoryApiRest();
-instructoresMap = repositorio.cargaInstructores();
-
-for(String nombre : instructoresMap.keySet()){
-    cbxInstructores.addItem(nombre);
-}
-    
-    
-}
 /**
- * Función que registra la actividad, obteniendo los datos introducidos en el formulario.
+ * Carga la lista de instructores desde el repositorio y los agrega al JComboBox de instructores.
+ *
+ * Este método obtiene un mapa de instructores del repositorio y añade
+ * cada uno de los nombres al JComboBox correspondiente, permitiendo que el usuario
+ * seleccione un instructor de la lista cargada.
+ *
+ * @see ApiRestRepository
  */
-public void registrar(){
-    
-    
-    if(Comprobacion.select(cbxHora)) Comprobacion.alertaSelect(this, cbxHora);
-    else if(Comprobacion.select(cbxMinutos)) Comprobacion.alertaSelect(this, cbxMinutos);
-    else if(Comprobacion.fechaVacia(boxFecha)) Comprobacion.alertaFechaVacia(this, boxFecha);
-    else if(Comprobacion.select(cbxLugar)) Comprobacion.alertaSelect(this, cbxLugar);
-    else if(Comprobacion.select(cbxPuntoSalida)) Comprobacion.alertaSelect(this, cbxPuntoSalida);
-    else if(Comprobacion.select(cbxInstructores)) Comprobacion.alertaSelect(this, cbxInstructores);
-    else if(Comprobacion.select(cbxTipoSalida)) Comprobacion.alertaSelect(this, cbxTipoSalida);
-    else{
+public void cargarInstructores() {
+    instructoresMap = repositorio.cargaInstructores();
+
+    for (String nombre : instructoresMap.keySet()) {
+        cbxInstructores.addItem(nombre);
+    }
+}
+
+/**
+ * Registra una nueva actividad de buceo obteniendo los datos introducidos en el formulario.
+ *
+ * Este método valida que todos los campos necesarios para registrar una actividad
+ * están debidamente seleccionados o rellenados. Si algún campo es inválido o está vacío,
+ * se muestra una alerta correspondiente al usuario. Una vez que todas las validaciones son exitosas,
+ * se crea una nueva instancia de {@link Actividad} con los datos proporcionados. Finalmente,
+ * intenta registrar la actividad en el repositorio. Se muestra un mensaje al usuario
+ * indicando si el registro fue exitoso o no.
+ *
+ * @throws IllegalArgumentException si alguno de los datos proporcionados es inválido.
+ *                                   (Nota: Puedes ajustar esto según tus necesidades de manejo de errores).
+ *
+ * @see Actividad
+ * @see ApiRestRepository
+ */
+public void registrar() {
+    if (Comprobacion.select(cbxHora)) Comprobacion.alertaSelect(this, cbxHora);
+    else if (Comprobacion.select(cbxMinutos)) Comprobacion.alertaSelect(this, cbxMinutos);
+    else if (Comprobacion.fechaVacia(boxFecha)) Comprobacion.alertaFechaVacia(this, boxFecha);
+    else if (Comprobacion.select(cbxLugar)) Comprobacion.alertaSelect(this, cbxLugar);
+    else if (Comprobacion.select(cbxPuntoSalida)) Comprobacion.alertaSelect(this, cbxPuntoSalida);
+    else if (Comprobacion.select(cbxInstructores)) Comprobacion.alertaSelect(this, cbxInstructores);
+    else if (Comprobacion.select(cbxTipoSalida)) Comprobacion.alertaSelect(this, cbxTipoSalida);
+    else {
+        String hora = cbxHora.getSelectedItem().toString() + ":" + cbxMinutos.getSelectedItem().toString();
+        Date fecha = boxFecha.getDate();
+        int instructor = seleccionaInstructor();
         
-    
-    
-    String hora= cbxHora.getSelectedItem().toString() + ":" + cbxMinutos.getSelectedItem().toString();
-    String fecha = conexion.formatoFecha(boxFecha.getDate());
-    int istructor = seleccionaInstructor();
-    
-    Actividad actividad = new Actividad(
+        Actividad salida = new Actividad(
             0,
             fecha,
             hora,
             cbxLugar.getSelectedItem().toString(),
             cbxPuntoSalida.getSelectedItem().toString(),
             instructor,
-            "instructor",
             cbxTipoSalida.getSelectedItem().toString()
-    );
-    
-      
-        
-        if(conexion.registrar_salidas_buceo(actividad)) JOptionPane.showMessageDialog(this, "Registrado");
-        else JOptionPane.showMessageDialog(this, "No registrado");
-        
-    } //Fin el úlitimo ELSE 
+        );
+
+        if (repositorio.registrar_salida_buceo(salida))
+            JOptionPane.showMessageDialog(this, "Registrado");
+        else
+            JOptionPane.showMessageDialog(this, "No registrado");
+    } // Fin del último ELSE 
 }
+
 /**
- * Recorre el Map de instructores en busca de similitud del String obtenido en JBox selector y el nombre del instructor en el Map
- * @return Devuelve el ID del instructor seleccionado en el JBox
+ * Selecciona el ID del instructor basado en la selección actual en el JComboBox de instructores.
+ *
+ * Este método recorre el mapa de instructores buscando una coincidencia entre
+ * el nombre seleccionado en el JComboBox y los nombres en el mapa. Si se encuentra
+ * una coincidencia, devuelve el ID correspondiente del instructor.
+ *
+ * @return el ID del instructor seleccionado en el JComboBox, o -1 si no se encuentra.
+ * 
+ * @see ApiRestRepository
  */
-public int seleccionaInstructor(){
+public int seleccionaInstructor() {
+    int instructor = -1; // Valor por defecto en caso de no encontrar al instructor
     
-    
-    for(Map.Entry<String, Integer> entrada : instructoresMap.entrySet()){
-       if(entrada.getKey().equals(cbxInstructores.getSelectedItem().toString())){
-           instructor = entrada.getValue();
-           System.out.println(instructor);
-           break;
-           
-       }
-        
+    for (Map.Entry<String, Integer> entrada : instructoresMap.entrySet()) {
+        if (entrada.getKey().equals(cbxInstructores.getSelectedItem().toString())) {
+            instructor = entrada.getValue();
+            System.out.println(instructor);
+            break;
+        }
     }
-    
-    
     
     return instructor;
 }

@@ -30,7 +30,7 @@ import javax.swing.table.DefaultTableModel;
  * Clase donde desarrollo el ClienteRepository para adaptarlo a una BD de tipo SQLite
  * @author israelmedrano
  */
-public class ClienteRepositorySQLite extends ClienteRepository{
+public class RepositorySQLite extends ClienteRepository{
     
     
     
@@ -48,7 +48,7 @@ public class ClienteRepositorySQLite extends ClienteRepository{
         try {
             conn = DriverManager.getConnection(url);
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteRepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "No se ha podido conectar con la base de datos\n" + ex.getMessage());
 
         }
@@ -64,7 +64,7 @@ public class ClienteRepositorySQLite extends ClienteRepository{
         try {
             conn.close();
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteRepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "No se ha podido cerrar la conexión a la base de datos\n" + ex.getMessage());
         }
     }
@@ -144,7 +144,7 @@ public class ClienteRepositorySQLite extends ClienteRepository{
                 model.addRow(cliente);
             }
         }catch (SQLException ex) {
-            Logger.getLogger(ClienteRepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             cerrarConexion();
         }
@@ -229,7 +229,7 @@ public class ClienteRepositorySQLite extends ClienteRepository{
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteRepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             cerrarConexion();
         }
@@ -259,7 +259,7 @@ String sql = "INSERT INTO salidas_buceo (fecha, hora, lugar, punto_salida, instr
         conectar();
         try {
             PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, a.getFecha());
+            pst.setDate(1, (java.sql.Date) a.getFecha());
             pst.setString(2, a.getHora());
             pst.setString(3, a.getLugar());
             pst.setString(4, a.getPuntoSalida());
@@ -318,7 +318,7 @@ String sql = "INSERT INTO salidas_buceo (fecha, hora, lugar, punto_salida, instr
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteRepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             cerrarConexion();
         
@@ -358,7 +358,7 @@ String sql = "INSERT INTO salidas_buceo (fecha, hora, lugar, punto_salida, instr
                 model.addRow(cliente);
             }
         }catch (SQLException ex) {
-            Logger.getLogger(ClienteRepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             cerrarConexion();
         } 
@@ -476,7 +476,7 @@ String sql = "INSERT INTO salidas_buceo (fecha, hora, lugar, punto_salida, instr
                 modelo.addRow(cliente);
             }
         }catch (SQLException ex) {
-            Logger.getLogger(ClienteRepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             cerrarConexion();
         }
@@ -531,7 +531,7 @@ String sql = "INSERT INTO salidas_buceo (fecha, hora, lugar, punto_salida, instr
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteRepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
                 cerrarConexion();
             }

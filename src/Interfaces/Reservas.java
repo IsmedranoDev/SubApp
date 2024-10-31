@@ -5,9 +5,9 @@
 package Interfaces;
 
 import Clases.Comprobacion;
-import Repository.ClienteRepository;
+
 import Repository.impl.ApiRestRepository;
-import Repository.impl.ClienteRepositoryMySQL;
+
 
 
 import javax.swing.JOptionPane;
@@ -146,11 +146,11 @@ Object idCliente;
         });
         jScrollPane1.setViewportView(reservasClientes);
 
-        jLabel2.setText("jLabel2");
+        jLabel2.setText("Nombre:");
 
-        jLabel3.setText("jLabel3");
+        jLabel3.setText("Capacidad de la botella:");
 
-        jLabel4.setText("jLabel4");
+        jLabel4.setText("Conexión de la botella:");
 
         jButton2.setText("Buscar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -198,20 +198,15 @@ Object idCliente;
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jLabel2)
-                .addGap(254, 254, 254)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(220, 220, 220))
-            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(jButton2)))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,38 +214,39 @@ Object idCliente;
                                 .addGap(86, 86, 86)
                                 .addComponent(btnAnadir))
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(74, 74, 74)
+                                .addGap(43, 43, 43)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbxBotella, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cbxConexion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbxBotella, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3)))))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 903, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4))))
                 .addGap(41, 41, 41)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(38, 38, 38)
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cbxBotella, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
+                                .addGap(34, 34, 34)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cbxConexion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
+                                .addGap(43, 43, 43)
                                 .addComponent(btnAnadir)
                                 .addGap(33, 33, 33)))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -301,75 +297,100 @@ Object idCliente;
         if(Comprobacion.vacio(txtNombre)){
             
          
-            ApiRestRepository apirestrepository = new ApiRestRepository();
+            
             apirestrepository.cargarClientes(modelo);
             
         }
-        else conexion.busquedaClientes(modelo, txtNombre.getText());
-        
+        //else conexion.busquedaClientes(modelo, txtNombre.getText());
+        else apirestrepository.busquedaClientes(modelo, txtNombre.getText());
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
 
-        //Selecciono la botella adecuada
-        int botella = -1;
-        if(cbxBotella.getSelectedIndex()==1 && cbxConexion.getSelectedIndex()==1) botella = 1;
-        else if(cbxBotella.getSelectedIndex()==1 && cbxConexion.getSelectedIndex()==2) botella = 2;
-        else if(cbxBotella.getSelectedIndex()==2 && cbxConexion.getSelectedIndex()==1) botella = 3;
-        else if(cbxBotella.getSelectedIndex()==2 && cbxConexion.getSelectedIndex()==2) botella = 4;
-        else if(cbxBotella.getSelectedIndex()==3 && cbxConexion.getSelectedIndex()==1) botella = 5;
-        else if(cbxBotella.getSelectedIndex()==3 && cbxConexion.getSelectedIndex()==2) botella = 6;
-        
-        
-        //Llamo a la función AgregarClienteActividad mandando el id que he seleccionado en la JTable y el idActividad que ya ha sido cargado al iniciar el JFrame
-        //int resultado=-1;
-        
-        if (Comprobacion.select(cbxBotella)) {Comprobacion.alertaSelect(this, cbxBotella);}
-        if (Comprobacion.select(cbxConexion)) {Comprobacion.alertaSelect(this, cbxConexion);} 
-        else {
+  /**
+ * Selecciona la botella adecuada basada en las selecciones realizadas en los JComboBox {@code cbxBotella} y {@code cbxConexion}.
+ * 
+ * Este segmento de código determina qué botella se debe utilizar para la actividad de buceo,
+ * dependiendo de las opciones seleccionadas por el usuario. A continuación, valida que ambas selecciones
+ * sean válidas antes de registrar la reserva en el repositorio.
+ * 
+ * Si alguna selección es inválida, se muestra una alerta correspondiente. En caso contrario, se
+ * intenta registrar la reserva utilizando el método {@link ApiRestRepository#registraReserva(int, int, int)},
+ * pasando el ID de la actividad, el ID del cliente y el ID de la botella seleccionada.
+ * 
+ * Se muestran mensajes al usuario dependiendo del resultado de la operación de registro:
+ * - Un error en la inscripción.
+ * - Un registro exitoso.
+ * - Un mensaje indicando que el cliente ya está registrado en la actividad.
+ * 
+ * @throws IllegalArgumentException si las selecciones de botella o conexión son inválidas.
+ *                                   (Nota: Ajustar según el manejo de errores necesario).
+ *
+ * @see ApiRestRepository
+ */
 
-            modelo.setRowCount(0);
-            ApiRestRepository apirestrepository = new ApiRestRepository();
-            
-            
-            //////////////////////////////
-            /////////////////////////////
-            ////////////////////////////
-            int resultado;
-            resultado = apirestrepository.registraReserva(idActividad, (int) idCliente, botella);
-            //resultado = conexion.agregarClienteActividad(idActividad, (int) idCliente, botella);
-            modelo2.setRowCount(0);
-            conexion.cargarReservas(modelo2, idActividad);
+    // Selecciono la botella adecuada
+    int botella = -1;
+    if (cbxBotella.getSelectedIndex() == 1 && cbxConexion.getSelectedIndex() == 1) botella = 1;
+    else if (cbxBotella.getSelectedIndex() == 1 && cbxConexion.getSelectedIndex() == 2) botella = 2;
+    else if (cbxBotella.getSelectedIndex() == 2 && cbxConexion.getSelectedIndex() == 1) botella = 3;
+    else if (cbxBotella.getSelectedIndex() == 2 && cbxConexion.getSelectedIndex() == 2) botella = 4;
+    else if (cbxBotella.getSelectedIndex() == 3 && cbxConexion.getSelectedIndex() == 1) botella = 5;
+    else if (cbxBotella.getSelectedIndex() == 3 && cbxConexion.getSelectedIndex() == 2) botella = 6;
 
-            
-            switch (resultado) {
+    // Validaciones de selección
+    if (Comprobacion.select(cbxBotella)) {
+        Comprobacion.alertaSelect(this, cbxBotella);
+    }
+    if (Comprobacion.select(cbxConexion)) {
+        Comprobacion.alertaSelect(this, cbxConexion);
+    } else {
+        modelo.setRowCount(0);
+        ApiRestRepository apirestrepository = new ApiRestRepository();
 
-                case 0 -> JOptionPane.showMessageDialog(this, "Ha ocurrido un error en la inscripción", "Error", JOptionPane.ERROR_MESSAGE);
+        // Registro de la reserva
+        int resultado = apirestrepository.registraReserva(idActividad, (int) idCliente, botella);
+        modelo2.setRowCount(0);
+        apirestrepository.cargarReservas(modelo2, idActividad);
 
-                case 1 -> JOptionPane.showMessageDialog(this, "El registro se realizó correctamente", "Registrado", JOptionPane.INFORMATION_MESSAGE);
-
-                case 2 -> JOptionPane.showMessageDialog(this, "El cliente ya se encuentra registrado en la actividad", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            
-            // 0 = No se a realizado la inscripción por error. 1 = El registro se ha realizado correctamente. 2= El usuario ya se encuentra en la actividad
-            //Fin del ELSE
+        // Manejo del resultado de la operación
+        switch (resultado) {
+            case 0:
+                JOptionPane.showMessageDialog(this, "Ha ocurrido un error en la inscripción", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(this, "El registro se realizó correctamente", "Registrado", JOptionPane.INFORMATION_MESSAGE);
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(this, "El cliente ya se encuentra registrado en la actividad", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
         }
+        // Fin del ELSE
+    
+}
+
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAnadirActionPerformed
 
     private void busquedaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_busquedaClientesMouseClicked
 /**
- * Con este segmento, capturo la ID del cliente al seleccionarlo con el ratón.
+ * Captura la ID del cliente al seleccionarlo en la tabla {@code busquedaClientes} con el ratón.
+ * 
+ * Este segmento de código determina la fila seleccionada en la tabla usando la posición
+ * del ratón y, si la fila es válida (mayor o igual a cero), extrae la ID del cliente
+ * de la primera columna de esa fila. A continuación, muestra un cuadro de diálogo con la ID
+ * del cliente seleccionado.
+ *
+ * @param evt el evento de ratón que contiene información sobre la acción de selección.
  */
-  int fila = busquedaClientes.rowAtPoint(evt.getPoint());
-        if(fila>=0){
-            idCliente = busquedaClientes.getValueAt(fila,0);
-                JOptionPane.showMessageDialog(this, idCliente, "hola", JOptionPane.INFORMATION_MESSAGE);
+int fila = busquedaClientes.rowAtPoint(evt.getPoint());
+if (fila >= 0) {
+    idCliente = busquedaClientes.getValueAt(fila, 0);
+    JOptionPane.showMessageDialog(this, idCliente, "hola", JOptionPane.INFORMATION_MESSAGE);
+}
 
-            
-        }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_busquedaClientesMouseClicked
@@ -417,7 +438,7 @@ Object idCliente;
     // End of variables declaration//GEN-END:variables
 DefaultTableModel modelo;
 DefaultTableModel modelo2;
-ClienteRepository conexion = new ClienteRepositoryMySQL();
+ApiRestRepository apirestrepository = new ApiRestRepository();
 
 
 

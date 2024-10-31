@@ -5,10 +5,10 @@
 package Interfaces;
 
 import Clases.Comprobacion;
-import Repository.ClienteRepository;
+
 import Repository.impl.ApiRestRepository;
-import Repository.impl.ClienteRepositorySQLite;
-import javax.swing.JOptionPane;
+
+
 import javax.swing.table.DefaultTableModel;
 
 
@@ -129,7 +129,7 @@ public class Actividades extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(reservas);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -197,7 +197,7 @@ modelo.setRowCount(0);
 //Obtengo la fecha del cuadrado del calendario, la combierto al fortamo adecuado y la paso como parámetro al método para obtener las salidas de esa fecha
 
 if(!Comprobacion.fechaVacia(boxFecha)){
-    //conexion.consultaRerservas(modelo, conexion.formatoFecha(boxFecha.getDate()));
+   
     
     ApiRestRepository apirestrepository = new ApiRestRepository();
     apirestrepository.consultaReservas(modelo, boxFecha.getDate());
@@ -261,6 +261,6 @@ if(!Comprobacion.fechaVacia(boxFecha)){
     private javax.swing.JTable reservas;
     // End of variables declaration//GEN-END:variables
 DefaultTableModel modelo;
-ClienteRepository conexion = new ClienteRepositorySQLite();
+
 
 }

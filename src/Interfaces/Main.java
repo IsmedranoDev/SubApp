@@ -236,7 +236,7 @@ public class Main extends javax.swing.JFrame {
 
         if ("calendar".equals(evt.getPropertyName())) {
             if (evt.getOldValue() != null) {
-                SimpleDateFormat ff = new SimpleDateFormat("dd/MM/yyy");
+                SimpleDateFormat ff = new SimpleDateFormat("yyyy-MM-dd");
                 String fecha = (ff.format(calendarioSelector.getCalendar().getTime()));
                 //JOptionPane.showMessageDialog(this, fecha);
                 

@@ -4,12 +4,11 @@
  */
 package Repository.impl;
 
-import Clases.Conexion;
+
 import Clases.Objetos.Actividad;
 import Clases.Objetos.Cliente;
 import Clases.Objetos.Instructor;
 import Repository.ClienteRepository;
-import static Repository.impl.ClienteRepositorySQLite.conn;
 import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author israelmedrano
  */
-public class ClienteRepositoryMySQL extends ClienteRepository{
+public class RepositoryMySQL extends ClienteRepository{
     
     static String url = "jdbc:mysql://localhost:3306/SubApp";
     static Connection conn;
@@ -43,10 +42,10 @@ public class ClienteRepositoryMySQL extends ClienteRepository{
             return conn;
             
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClienteRepositoryMySQL.class.getName()).log(Level.SEVERE, "Error al cargar el driver de MySQL", ex);
+            Logger.getLogger(RepositoryMySQL.class.getName()).log(Level.SEVERE, "Error al cargar el driver de MySQL", ex);
             JOptionPane.showMessageDialog(null, "No se pudo cargar el driver de MySQL\n" + ex.getMessage());
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteRepositoryMySQL.class.getName()).log(Level.SEVERE, "Error al conectar a la base de datos", ex);
+            Logger.getLogger(RepositoryMySQL.class.getName()).log(Level.SEVERE, "Error al conectar a la base de datos", ex);
             JOptionPane.showMessageDialog(null, "No se ha podido conectar con la base de datos\n" + ex.getMessage());
         }
         return null;
@@ -79,7 +78,7 @@ public class ClienteRepositoryMySQL extends ClienteRepository{
                 model.addRow(cliente);
             }
         }catch (SQLException ex) {
-            Logger.getLogger(ClienteRepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             cerrarConexion();
         }
@@ -145,7 +144,7 @@ public class ClienteRepositoryMySQL extends ClienteRepository{
                 modelo.addRow(cliente);
             }
         }catch (SQLException ex) {
-            Logger.getLogger(ClienteRepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositorySQLite.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             cerrarConexion();
         }
@@ -167,7 +166,7 @@ public class ClienteRepositoryMySQL extends ClienteRepository{
         try {
             conn.close();
         } catch (SQLException ex) {
-            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "No se ha podido cerrar la conexión a la base de datos\n" + ex.getMessage());
         }
         
